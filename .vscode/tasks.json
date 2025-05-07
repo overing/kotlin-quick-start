@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "gradlew",
+            "args": ["build"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gradle"]
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "gradlew",
+            "args": ["run"],
+            "problemMatcher": ["$gradle"]
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "command": "gradlew",
+            "args": ["test"],
+            "problemMatcher": ["$gradle"]
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "gradlew",
+            "args": ["clean", "build", "--refresh-dependencies"],
+            "problemMatcher": ["$gradle"]
+        },
+        {
+            "label": "check",
+            "type": "shell",
+            "command": "gradlew",
+            "args": ["check"],
+            "problemMatcher": ["$gradle"]
+        }
+    ]
+}
