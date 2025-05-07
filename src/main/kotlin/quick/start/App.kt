@@ -1,26 +1,34 @@
 package quick.start
 
-import org.kodein.di.DI
+import io.ktor.server.application.call
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 import org.kodein.di.bindSingleton
+import org.kodein.di.DI
 import org.kodein.di.instance
 
-class Gen {
+class MyService {
     val greeting: String
         get() = "Hello world."
 }
 
-class App(private val gen: Gen) {
-    fun persist() {
-        println(gen.greeting)
-    }
-}
-
 fun main() {
     val di = DI {
-        bindSingleton<Gen> { Gen() }
-        bindSingleton<App> { App(instance()) }
+        bindSingleton<MyService> { MyService() }
     }
 
-    val app: App by di.instance()
-    app.persist()
+    embeddedServer(Netty, port = 8080) {
+        routing {
+            get("/") {
+                call.respondText("Is Working!")
+            }
+            get("/api/hello") {
+                val service: MyService by di.instance()
+                call.respondText(service.greeting)
+            }
+        }
+    }.start(wait = true)
 }
